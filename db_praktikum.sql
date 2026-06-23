@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 23, 2026 at 03:32 PM
+-- Generation Time: Jun 23, 2026 at 04:06 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -122,9 +122,16 @@ CREATE TABLE `praktikum` (
 CREATE TABLE `users` (
   `id_user` int NOT NULL,
   `username` varchar(50) DEFAULT NULL,
-  `password` varchar(10) DEFAULT NULL,
+  `password` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `role` enum('admin','asisten','mahasiswa') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id_user`, `username`, `password`, `role`) VALUES
+(1, 'admin', '12345', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -230,7 +237,7 @@ ALTER TABLE `praktikum`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
