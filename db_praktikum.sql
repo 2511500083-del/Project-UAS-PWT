@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 23, 2026 at 04:06 PM
+-- Generation Time: Jun 23, 2026 at 06:40 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -75,6 +75,13 @@ CREATE TABLE `kelas` (
   `program_studi` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `kelas`
+--
+
+INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `program_studi`) VALUES
+(1, 'ti1b', 'teknik informatika');
+
 -- --------------------------------------------------------
 
 --
@@ -86,6 +93,13 @@ CREATE TABLE `laboratorium` (
   `nama_lab` varchar(5) DEFAULT NULL,
   `kapasitas` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `laboratorium`
+--
+
+INSERT INTO `laboratorium` (`id_lab`, `nama_lab`, `kapasitas`) VALUES
+(2, 'lab2', 30);
 
 -- --------------------------------------------------------
 
@@ -101,6 +115,13 @@ CREATE TABLE `mahasiswa` (
   `id_user` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `mahasiswa`
+--
+
+INSERT INTO `mahasiswa` (`nim`, `nama_mahasiswa`, `jurusan`, `id_kelas`, `id_user`) VALUES
+('0876', 'pika ', 'teknik informatika', 1, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -110,8 +131,15 @@ CREATE TABLE `mahasiswa` (
 CREATE TABLE `praktikum` (
   `id_praktikum` int NOT NULL,
   `nama_praktikum` varchar(50) DEFAULT NULL,
-  `semester` int DEFAULT NULL
+  `semester` varchar(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `praktikum`
+--
+
+INSERT INTO `praktikum` (`id_praktikum`, `nama_praktikum`, `semester`) VALUES
+(2, 'desainmobile', 'genap');
 
 -- --------------------------------------------------------
 
@@ -131,7 +159,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `username`, `password`, `role`) VALUES
-(1, 'admin', '12345', 'admin');
+(1, 'admin', '12345', 'admin'),
+(3, '0876', '12345', 'mahasiswa');
 
 --
 -- Indexes for dumped tables
@@ -201,7 +230,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `asisten_lab`
 --
 ALTER TABLE `asisten_lab`
-  MODIFY `id_asisten` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asisten` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `detail_jadwal`
@@ -219,25 +248,25 @@ ALTER TABLE `jadwal`
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kelas` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `laboratorium`
 --
 ALTER TABLE `laboratorium`
-  MODIFY `id_lab` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_lab` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `praktikum`
 --
 ALTER TABLE `praktikum`
-  MODIFY `id_praktikum` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_praktikum` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
