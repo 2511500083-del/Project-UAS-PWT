@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 23, 2026 at 06:40 PM
+-- Generation Time: Jun 24, 2026 at 11:03 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -34,6 +34,13 @@ CREATE TABLE `asisten_lab` (
   `id_user` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `asisten_lab`
+--
+
+INSERT INTO `asisten_lab` (`id_asisten`, `nama_asisten`, `no_hp`, `id_user`) VALUES
+(1, 'Fika', '082176059913', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -51,6 +58,13 @@ CREATE TABLE `detail_jadwal` (
   `jam_selesai` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `detail_jadwal`
+--
+
+INSERT INTO `detail_jadwal` (`id_detail`, `id_jadwal`, `id_praktikum`, `id_asisten`, `id_kelas`, `hari`, `jam_mulai`, `jam_selesai`) VALUES
+(1, 1, 1, 1, 3, 'Kamis', '09:30:00', '12:30:00');
+
 -- --------------------------------------------------------
 
 --
@@ -60,8 +74,16 @@ CREATE TABLE `detail_jadwal` (
 CREATE TABLE `jadwal` (
   `id_jadwal` int NOT NULL,
   `tanggal` date DEFAULT NULL,
-  `id_lab` int DEFAULT NULL
+  `id_lab` int DEFAULT NULL,
+  `id_praktikum` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `jadwal`
+--
+
+INSERT INTO `jadwal` (`id_jadwal`, `tanggal`, `id_lab`, `id_praktikum`) VALUES
+(1, '2025-06-24', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -80,7 +102,8 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `program_studi`) VALUES
-(1, 'ti1b', 'teknik informatika');
+(3, 'TI1A', 'TI'),
+(4, 'TI2B', 'TI');
 
 -- --------------------------------------------------------
 
@@ -99,7 +122,7 @@ CREATE TABLE `laboratorium` (
 --
 
 INSERT INTO `laboratorium` (`id_lab`, `nama_lab`, `kapasitas`) VALUES
-(2, 'lab2', 30);
+(1, 'Lab 1', 20);
 
 -- --------------------------------------------------------
 
@@ -120,7 +143,7 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`nim`, `nama_mahasiswa`, `jurusan`, `id_kelas`, `id_user`) VALUES
-('0876', 'pika ', 'teknik informatika', 1, 3);
+('2511500083', 'Salsabilla Agustin', 'Teknik Informatika', 3, 2);
 
 -- --------------------------------------------------------
 
@@ -139,7 +162,7 @@ CREATE TABLE `praktikum` (
 --
 
 INSERT INTO `praktikum` (`id_praktikum`, `nama_praktikum`, `semester`) VALUES
-(2, 'desainmobile', 'genap');
+(1, 'Desain Grafik', 'Genap');
 
 -- --------------------------------------------------------
 
@@ -160,7 +183,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id_user`, `username`, `password`, `role`) VALUES
 (1, 'admin', '12345', 'admin'),
-(3, '0876', '12345', 'mahasiswa');
+(2, '2511500083', '12345', 'mahasiswa'),
+(3, '082176059913', '12345', 'asisten');
 
 --
 -- Indexes for dumped tables
@@ -188,7 +212,8 @@ ALTER TABLE `detail_jadwal`
 --
 ALTER TABLE `jadwal`
   ADD PRIMARY KEY (`id_jadwal`),
-  ADD KEY `id_lab` (`id_lab`);
+  ADD KEY `id_lab` (`id_lab`),
+  ADD KEY `fk_jadwal_praktikum` (`id_praktikum`);
 
 --
 -- Indexes for table `kelas`
@@ -236,37 +261,37 @@ ALTER TABLE `asisten_lab`
 -- AUTO_INCREMENT for table `detail_jadwal`
 --
 ALTER TABLE `detail_jadwal`
-  MODIFY `id_detail` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id_jadwal` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_jadwal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kelas` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `laboratorium`
 --
 ALTER TABLE `laboratorium`
-  MODIFY `id_lab` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_lab` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `praktikum`
 --
 ALTER TABLE `praktikum`
-  MODIFY `id_praktikum` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_praktikum` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -291,6 +316,7 @@ ALTER TABLE `detail_jadwal`
 -- Constraints for table `jadwal`
 --
 ALTER TABLE `jadwal`
+  ADD CONSTRAINT `fk_jadwal_praktikum` FOREIGN KEY (`id_praktikum`) REFERENCES `praktikum` (`id_praktikum`),
   ADD CONSTRAINT `jadwal_ibfk_1` FOREIGN KEY (`id_lab`) REFERENCES `laboratorium` (`id_lab`);
 
 --
