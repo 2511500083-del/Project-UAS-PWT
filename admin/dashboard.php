@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include '../config/koneksi.php';
+
 if (!isset($_SESSION['role'])) {
     header("Location: ../auth/login.php");
     exit;
@@ -10,6 +12,8 @@ if ($_SESSION['role'] != 'admin') {
     header("Location: ../auth/login.php");
     exit;
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -187,6 +191,44 @@ table td{
     border-bottom:1px solid #ddd;
 }
 
+.dashboard-cards{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.card-box{
+    background: #f5f5f5;
+    border-radius: 25px;
+    padding: 35px 40px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card-box h3{
+    font-size: 18px;
+    color: #5f7187;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.card-box h2{
+    font-size: 56px;
+    color: #2f63e0;
+    font-weight: 700;
+    line-height: 1;
+}
+
+@media(max-width:768px){
+    .dashboard-cards{
+        grid-template-columns: 1fr;
+    }
+}
+
 
 
 @media(max-width:768px){
@@ -286,68 +328,148 @@ table td{
 
     </div>
 
+    <?php
+    // Hitung jumlah mahasiswa
+    $mahasiswa = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM mahasiswa"));
+
+    // Hitung jumlah asisten
+    $asisten = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM asisten_lab"));
+
+    // Hitung jumlah laboratorium
+    $laboratorium = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM laboratorium"));
+
+    // Hitung jumlah praktikum
+    $praktikum = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM praktikum"));
+    ?>
+
     
 
-    <div class="cards">
+   <div class="dashboard-cards">
 
-        <div class="card blue">
-            <i class="bi bi-mortarboard-fill"></i>
-            <h2>120</h2>
+    <div class="card-box blue">
+        <div class="icon">
+            <i class="fas fa-user-graduate"></i>
+        </div>
+        <div class="content">
+            <h2><?= $mahasiswa ?></h2>
             <p>Mahasiswa</p>
         </div>
+    </div>
 
-        <div class="card green">
-            <i class="bi bi-person-workspace"></i>
-            <h2>8</h2>
+    <div class="card-box green">
+        <div class="icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <div class="content">
+            <h2><?= $asisten ?></h2>
             <p>Asisten Lab</p>
         </div>
+    </div>
 
-        <div class="card orange">
-            <i class="bi bi-pc-display"></i>
-            <h2>5</h2>
+    <div class="card-box orange">
+        <div class="icon">
+            <i class="fas fa-desktop"></i>
+        </div>
+        <div class="content">
+            <h2><?= $laboratorium ?></h2>
             <p>Laboratorium</p>
         </div>
+    </div>
 
-        <div class="card red">
-            <i class="bi bi-book-fill"></i>
-            <h2>10</h2>
+    <div class="card-box red">
+        <div class="icon">
+            <i class="fas fa-book-open"></i>
+        </div>
+        <div class="content">
+            <h2><?= $praktikum ?></h2>
             <p>Praktikum</p>
         </div>
-
     </div>
+
+</div>
 
    
 
     <div class="table-box">
 
-        <h3>Jadwal Praktikum Terbaru</h3>
+    <h3>Jadwal Praktikum Terbaru</h3>
 
-        <table>
-
+    <table>
+        <thead>
             <tr>
                 <th>Praktikum</th>
                 <th>Lab</th>
                 <th>Hari</th>
                 <th>Jam</th>
             </tr>
+        </thead>
+
+        <tbody>
+
+        <?php
+
+        $query = mysqli_query($conn, "
+            SELECT
+                p.nama_praktikum,
+                l.nama_lab,
+                d.hari,
+                d.jam_mulai,
+                d.jam_selesai
+            FROM detail_jadwal d
+            JOIN jadwal j
+                ON d.id_jadwal = j.id_jadwal
+            JOIN praktikum p
+                ON j.id_praktikum = p.id_praktikum
+            JOIN laboratorium l
+                ON j.id_lab = l.id_lab
+            ORDER BY d.id_detail DESC
+            LIMIT 5
+        ");
+
+        if(mysqli_num_rows($query) > 0){
+
+            while($row = mysqli_fetch_assoc($query)){
+        ?>
+
+            <tbody>
+
+<?php if(mysqli_num_rows($query) > 0): ?>
+
+    <?php while($row = mysqli_fetch_assoc($query)): ?>
+
+    <tr>
+        <td><?= htmlspecialchars($row['nama_praktikum']) ?></td>
+        <td><?= htmlspecialchars($row['nama_lab']) ?></td>
+        <td><?= htmlspecialchars($row['hari']) ?></td>
+        <td>
+            <?= date('H.i', strtotime($row['jam_mulai'])) ?>
+            -
+            <?= date('H.i', strtotime($row['jam_selesai'])) ?>
+        </td>
+    </tr>
+
+    <?php endwhile; ?>
+
+
+
+</tbody>
+
+        <?php
+            }
+        } else {
+        ?>
 
             <tr>
-                <td>Desain Mobile</td>
-                <td>Lab 1</td>
-                <td>Senin</td>
-                <td>08.00 - 10.00</td>
+                <td colspan="4" class="empty-data">
+                    Belum ada jadwal praktikum
+                </td>
             </tr>
 
-            <tr>
-                <td>Pemrograman Web</td>
-                <td>Lab Komputer 2</td>
-                <td>Selasa</td>
-                <td>10.00 - 12.00</td>
-            </tr>
+        <?php } ?>
 
-        </table>
+        </tbody>
 
-    </div>
+    </table>
 
 </div>
 

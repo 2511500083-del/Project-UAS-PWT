@@ -183,10 +183,10 @@ input[readonly]{
 <form method="POST">
 
     <div class="form-group">
-        <label>ID Asisten</label>
+        <label>Kode Asisten</label>
         <input
             type="text"
-            value="<?= $asisten['id_asisten']; ?>"
+            value="<?= $asisten['kode_asisten']; ?>"
             readonly
         >
     </div>
