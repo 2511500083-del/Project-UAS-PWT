@@ -2,10 +2,25 @@
 
 include "../../config/koneksi.php";
 
-if(isset($_POST['tambah'])){
+$carikode = mysqli_query($conn,
+    "SELECT MAX(kode_asisten) AS kode FROM asisten_lab"
+);
 
+$data = mysqli_fetch_assoc($carikode);
+
+if (!empty($data['kode'])) {
+    $nilaikode = substr($data['kode'], 4); // karena "AST-" = 4 karakter
+    $kode = (int)$nilaikode + 1;
+    $hasilkode = "AST-" . str_pad($kode, 3, "0", STR_PAD_LEFT);
+} else {
+    $hasilkode = "AST-001";
+}
+
+if(isset($_POST['tambah'])){
+    $kode_asisten = $_POST['kode_asisten'];
     $nama = $_POST['nama_asisten'];
-    $id_asisten = $_POST['no_hp'];
+    $no_hp = $_POST['no_hp'];
+   
 
     // Simpan akun login asisten
     mysqli_query($conn,"
@@ -17,7 +32,7 @@ if(isset($_POST['tambah'])){
         )
         VALUES
         (
-            '$no_hp',
+            '$kode_asisten',
             '12345',
             'asisten'
         )
@@ -30,12 +45,14 @@ if(isset($_POST['tambah'])){
     $insert = mysqli_query($conn,"
         INSERT INTO asisten_lab
         (
+            kode_asisten,
             nama_asisten,
             no_hp,
             id_user
         )
         VALUES
         (
+            '$kode_asisten',
             '$nama',
             '$no_hp',
             '$id_user'
@@ -194,6 +211,16 @@ input:focus{
     </div>
 
     <form method="POST">
+        <div class="form-group">
+            <label for="id_asisten">Kode Asisten</label>
+            <input 
+            type="text" 
+            name="kode_asisten" 
+            value="<?= $hasilkode; ?>" 
+            placeholder="Id Kat" 
+            class="form-control" 
+            readonly>
+        </div>
 
         <div class="form-group">
             <label>Nama Asisten</label>
