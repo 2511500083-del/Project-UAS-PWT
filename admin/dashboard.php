@@ -35,7 +35,7 @@ body{
     background:#f4f7fe;
 }
 
-/* SIDEBAR */
+
 
 .sidebar{
     position:fixed;
@@ -75,14 +75,14 @@ body{
     margin-right:10px;
 }
 
-/* MAIN */
+
 
 .main{
     margin-left:260px;
     padding:25px;
 }
 
-/* TOPBAR */
+
 
 .topbar{
     background:white;
@@ -103,7 +103,7 @@ body{
     color:#0d6efd;
 }
 
-/* WELCOME */
+
 
 .welcome{
     margin-top:20px;
@@ -117,7 +117,7 @@ body{
     margin-bottom:10px;
 }
 
-/* CARDS */
+
 
 .cards{
     margin-top:25px;
@@ -157,7 +157,7 @@ body{
     border-left:6px solid #ef4444;
 }
 
-/* TABLE */
+
 
 .table-box{
     margin-top:25px;
@@ -187,7 +187,7 @@ table td{
     border-bottom:1px solid #ddd;
 }
 
-/* RESPONSIVE */
+
 
 @media(max-width:768px){
 
@@ -208,7 +208,7 @@ table td{
 
 <body>
 
-<!-- SIDEBAR -->
+
 
 <div class="sidebar">
 
@@ -257,11 +257,11 @@ table td{
 
 </div>
 
-<!-- MAIN -->
+
 
 <div class="main">
 
-    <!-- TOPBAR -->
+   
 
     <div class="topbar">
 
@@ -273,7 +273,7 @@ table td{
 
     </div>
 
-    <!-- WELCOME -->
+   
 
     <div class="welcome">
 
@@ -286,7 +286,7 @@ table td{
 
     </div>
 
-    <!-- STATISTIK -->
+    
 
     <div class="cards">
 
@@ -316,7 +316,7 @@ table td{
 
     </div>
 
-    <!-- JADWAL TERBARU -->
+   
 
     <div class="table-box">
 
@@ -332,8 +332,8 @@ table td{
             </tr>
 
             <tr>
-                <td>Basis Data</td>
-                <td>Lab Komputer 1</td>
+                <td>Desain Mobile</td>
+                <td>Lab 1</td>
                 <td>Senin</td>
                 <td>08.00 - 10.00</td>
             </tr>

@@ -5,7 +5,7 @@ include "../../config/koneksi.php";
 if(isset($_POST['tambah'])){
 
     $nama = $_POST['nama_asisten'];
-    $no_hp = $_POST['no_hp'];
+    $id_asisten = $_POST['no_hp'];
 
     // Simpan akun login asisten
     mysqli_query($conn,"

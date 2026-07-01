@@ -22,14 +22,13 @@ SELECT * FROM jadwal
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard Mahasiswa</title>
+<title>Dashboard Asisten</title>
 
 <style>
 
@@ -105,6 +104,11 @@ background:white;
 padding:25px;
 border-radius:20px;
 box-shadow:0 10px 30px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
 }
 
 .card h3{
@@ -144,7 +148,7 @@ line-height:1.8;
 <div class="sidebar">
 
 <div class="logo">
-🎓 Mahasiswa
+👨‍🏫 Asisten
 </div>
 
 <div class="menu">
@@ -162,10 +166,10 @@ line-height:1.8;
 </a>
 
 <a href="ganti_password.php">
-    🔑 Ganti Password
+🔑 Ganti Password
 </a>
 
-<a href="../logout.php">
+<a href="../auth/logout.php">
 🚪 Logout
 </a>
 
@@ -176,7 +180,7 @@ line-height:1.8;
 <div class="main">
 
 <div class="header">
-<h1>Selamat Datang 👋</h1>
+<h1>Selamat Datang Asisten 👋</h1>
 <p>Sistem Informasi Praktikum Laboratorium</p>
 </div>
 
@@ -207,12 +211,13 @@ line-height:1.8;
 
 <div class="info-box">
 
-<h2>Informasi Mahasiswa</h2>
+<h2>Informasi Asisten</h2>
 
 <p>
 Selamat datang di Sistem Informasi Praktikum Laboratorium.
-Melalui dashboard ini mahasiswa dapat melihat jadwal praktikum,
-informasi laboratorium, dan data praktikum yang tersedia.
+Melalui dashboard ini asisten dapat melihat jadwal praktikum,
+memantau laboratorium yang digunakan, melihat data praktikum,
+mengelola profil, serta mengganti password akun.
 </p>
 
 </div>
